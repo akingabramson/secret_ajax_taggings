@@ -6,6 +6,11 @@ class SecretsController < ApplicationController
     end
   end
 
+  def new
+    @secret = Secret.new
+    @users = User.all
+  end
+
   def create
     @secret = Secret.create!(params[:secret])
 

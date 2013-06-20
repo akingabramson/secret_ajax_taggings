@@ -5,3 +5,45 @@
     <li><%= secret.title %></li>
   <% end %>
 </ul>
+
+<ul>
+<% @users.each do |user| %>
+	<li>
+		<%= user.username %>
+		<%= button_to(
+	      "Add Friend",
+	      friendship_url(user),
+	      # friendships_url(:friendship => { :friendee_id => user.id }),
+	      :method => :post,
+				:remote => :true,
+				:form => { :class => "add_friend_form" }) %>
+	</li>
+<% end %>
+
+<script>
+
+	$(".add_friend_form").on('ajax:before', function (event, data) {
+		// var testing;
+		// debugger;
+		$(event.target).children().children().first().val("friending");
+		// var $submitBtn = $(event.target).children().val("friending ..."); //html("TESTING");
+		// console.log($submitBtn);
+		// this.html("ADDED");
+		// $(this).html("TESTING");
+		// var $submitButton = $(this + " input[type='submit']");
+		// console.log($submitButton);
+		// $submitButton.val("Friending...");
+		// console.log(event.currentTarget);
+		// var testBox = $("<p>YES!</p>");
+		// event.currentTarget.replaceWith(testBox);
+	});
+
+	$(".add_friend_form").on("ajax:success", function (event, data) {
+		// this.html("ADDED");
+		// $(this).html("TESTING");
+		// $(event.currentTarget).html("Friended");
+		// console.log(event.currentTarget);
+		// var testBox = $("<p>YES!</p>");
+		// event.currentTarget.replaceWith(testBox);
+	});
+</script>
