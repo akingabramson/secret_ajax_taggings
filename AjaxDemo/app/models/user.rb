@@ -26,23 +26,26 @@ class User < ActiveRecord::Base
   )
 
   has_many(
-    :friendee_friendships,
+    :following_me_friendships,
     :class_name => "Friendship",
     :foreign_key => "friendee_id",
+    :inverse_of => :friendee)
+
+  has_many(
+    :following_them_friendships,
+    :class_name => "Friendship",
+    :foreign_key => "friender_id",
     :inverse_of => :friender)
 
   has_many(
-    :friender_friendships,
-    :class_name => "Friendship",
-    :foreign_key => "friender_id")
+    :friends,
+    :through => :following_them_friendships,
+    :source => :friendee)
 
   has_many(
-    :friendees,
-    :through => :friendee_friendships)
-
-  has_many(
-    :frienders,
-    :through => :friender_friendships)
+    :followers,
+    :through => :following_me_friendships,
+    :source => :friender)
 
 
   validates :username, :password_digest, :presence => true

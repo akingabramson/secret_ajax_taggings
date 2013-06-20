@@ -10,40 +10,59 @@
 <% @users.each do |user| %>
 	<li>
 		<%= user.username %>
-		<%= button_to(
+		<div class="friend_buttons <%= is_friends_with?(user) ? "friended" : "unfriended" %>">
+			<%= button_to(
 	      "Add Friend",
 	      friendship_url(user),
-	      # friendships_url(:friendship => { :friendee_id => user.id }),
 	      :method => :post,
 				:remote => :true,
-				:form => { :class => "add_friend_form" }) %>
+				:form => { :class => "add_friend_form"}) %>
+
+			<%= button_to(
+	      "Remove Friend",
+	      friendship_url(user),
+	      :method => :delete,
+				:remote => :true,
+				:form => { :class => "remove_friend_form" }) %>
+		</div>
 	</li>
 <% end %>
 
 <script>
 
+	// add friend
 	$(".add_friend_form").on('ajax:before', function (event, data) {
-		// var testing;
-		// debugger;
-		$(event.target).children().children().first().val("friending");
-		// var $submitBtn = $(event.target).children().val("friending ..."); //html("TESTING");
-		// console.log($submitBtn);
-		// this.html("ADDED");
-		// $(this).html("TESTING");
-		// var $submitButton = $(this + " input[type='submit']");
-		// console.log($submitButton);
-		// $submitButton.val("Friending...");
-		// console.log(event.currentTarget);
-		// var testBox = $("<p>YES!</p>");
-		// event.currentTarget.replaceWith(testBox);
+		var $submitButton = $(event.target).find("input[type='submit']");
+		$submitButton.val("Friending ...");
+		$submitButton.attr('disabled', 'disabled')
 	});
 
 	$(".add_friend_form").on("ajax:success", function (event, data) {
-		// this.html("ADDED");
-		// $(this).html("TESTING");
-		// $(event.currentTarget).html("Friended");
-		// console.log(event.currentTarget);
-		// var testBox = $("<p>YES!</p>");
-		// event.currentTarget.replaceWith(testBox);
+		var $submitButton = $(event.target).find("input[type='submit']");
+		$submitButton.val("Add Friend");
+		$submitButton.removeAttr('disabled');
+
+		// swap friended class
+		$(event.target).closest(".friend_buttons").toggleClass("friended").toggleClass("unfriended");
 	});
+
+
+	// remove friend
+	$(".remove_friend_form").on('ajax:before', function (event, data) {
+		var $submitButton = $(event.target).find("input[type='submit']");
+		$submitButton.val("Unfriending ...");
+		$submitButton.attr('disabled', 'disabled')
+	});
+
+	$(".remove_friend_form").on("ajax:success", function (event, data) {
+
+		var $submitButton = $(event.target).find("input[type='submit']");
+		$submitButton.val("Remove Friend");
+		$submitButton.removeAttr('disabled');
+
+		// swap friended class
+		$(event.target).closest(".friend_buttons").toggleClass("friended").toggleClass("unfriended");
+	});
+
+
 </script>

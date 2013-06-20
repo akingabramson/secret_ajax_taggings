@@ -14,10 +14,9 @@ users = User.create([
 ])
 
 friendships = Friendship.create([
-  { friender_id: 1, friendee_id: 2},
-  { friender_id: 3, friendee_id: 2},
-  { friender_id: 2, friendee_id: 1}
-
+  { friender_id: 1, friendee_id: 2 },
+  { friender_id: 3, friendee_id: 2 },
+  { friender_id: 2, friendee_id: 1 }
 ])
 
 seeds = Secret.create([
