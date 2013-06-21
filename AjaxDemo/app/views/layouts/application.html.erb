@@ -9,10 +9,11 @@
 
 <body>
 
-	<%= session[:session_token] %>
+	<p><%= session[:session_token] %></p>
 
 	<% if current_user %>
-		<%= current_user.username %>
+		welcome back
+		<%= link_to current_user.username, user_url(current_user) %>
 	<% else %>
 		<%= link_to "login", new_session_url %>
 	<% end  %>

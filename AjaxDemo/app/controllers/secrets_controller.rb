@@ -12,10 +12,14 @@ class SecretsController < ApplicationController
   end
 
   def create
-    @secret = Secret.create!(params[:secret])
+    @secret = current_user.authored_secrets.build(params[:secret])
 
-    respond_to do |format|
-      format.json { render :json => @secret }
+    if @secret.save
+      render :json => @secret
+    else
+      render :json => @secret.errors
     end
+
+
   end
 end
