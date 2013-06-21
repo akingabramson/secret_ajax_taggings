@@ -17,7 +17,8 @@ class User < ActiveRecord::Base
   has_many(
     :authored_secrets,
     :class_name => "Secret",
-    :foreign_key => "author_id"
+    :foreign_key => "author_id",
+    :inverse_of => :author
   )
   has_many(
     :received_secrets,

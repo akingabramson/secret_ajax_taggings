@@ -26,3 +26,9 @@ seeds = Secret.create([
   { title: "secrets here", author_id: 2, recipient_id: 1 }
 ])
 
+tags = Tag.create([
+  {title: "Sports"},
+  {title: "Cats"},
+  {title: "Television"}
+])
+

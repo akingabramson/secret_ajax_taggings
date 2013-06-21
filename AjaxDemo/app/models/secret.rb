@@ -11,10 +11,15 @@
 #
 
 class Secret < ActiveRecord::Base
-  attr_accessible :title, :author_id, :recipient_id
+  attr_accessible :title, :author_id, :recipient_id, :secret_taggings_attributes
 
   belongs_to :author, :class_name => "User"
   belongs_to :recipient, :class_name => "User"
 
+  has_many :secret_taggings
+  has_many :tags, :through => :secret_taggings
+
   validates :title, :author, :recipient, :presence => true
+
+  accepts_nested_attributes_for :secret_taggings
 end
